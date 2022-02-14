@@ -3,7 +3,7 @@ package org.pucrs.ages
 import grails.gorm.services.Service
 
 @Service(Questions)
-interface QuestionsService {
+interface QuestionsInterfaceService {
 
     Questions get(Serializable id)
 

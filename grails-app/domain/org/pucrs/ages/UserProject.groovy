@@ -42,7 +42,7 @@ class UserProject implements Serializable {
     }
 
     private static DetachedCriteria criteriaFor(long userId, long projectId) {
-        UserProject.where {
+        where {
             user == User.load(userId) &&
                     project == Project.load(projectId)
         }
@@ -56,23 +56,23 @@ class UserProject implements Serializable {
 
     static boolean remove(User u, Project r) {
         if (u != null && r != null) {
-            UserProject.where { user == u && project == r }.deleteAll()
+            where { user == u && project == r }.deleteAll()
         }
     }
 
     static int removeAll(User u) {
-        u == null ? 0 : UserProject.where { user == u }.deleteAll() as int
+        u == null ? 0 : where { user == u }.deleteAll() as int
     }
 
     static int removeAll(Project r) {
-        r == null ? 0 : UserProject.where { project == r }.deleteAll() as int
+        r == null ? 0 : where { project == r }.deleteAll() as int
     }
 
     static constraints = {
         user nullable: false
         project nullable: false, validator: { Project r, UserProject ur ->
             if (ur.user?.id) {
-                if (UserProject.exists(ur.user.id, r.id)) {
+                if (exists(ur.user.id, r.id)) {
                     return ['userRole.exists']
                 }
             }

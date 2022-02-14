@@ -2304,6 +2304,17 @@ textarea.form-control {
   transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
+.btn-align {
+  width: 50%;
+  margin: 0 2px auto;
+}
+
+.form-validate {
+  display: flex;
+  align-content: center;
+  align-self: center;
+}
+
 @media screen and (prefers-reduced-motion: reduce) {
   .btn {
     transition: none;

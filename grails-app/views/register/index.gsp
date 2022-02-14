@@ -32,7 +32,6 @@
                 <form class="form-signin" action="register" method="POST" id="loginForm" autocomplete="off">
 
                     <div class="form-group">
-                        %{--@declare id="project"--}%
                         <label for="project"><g:message code="default.security.project"/></label>
                         <g:select class="form-control" name="project.id"
                                   from="${Project.list()}"
@@ -41,7 +40,7 @@
 
                     <div class="form-group">
                         <label for="username"><g:message code="default.security.username"/></label>
-                        <label class="information" onclick="information('${message(code:'default.username.registration')}', '${message(code:'default.security.username.information')}')"> </label>
+                        <label class="information" onclick="information('${message(code:'default.security.username')}', '${message(code:'default.security.username.information')}')"> </label>
                         <input required type="text" placeholder="<g:message code="default.security.form.username"/>" class="form-control" name="username" id="username" autocapitalize="none"/>
                     </div>
 

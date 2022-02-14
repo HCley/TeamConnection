@@ -1,0 +1,10 @@
+{
+  "properties": [
+    {
+      "name": "application.default.theme.color",
+      "defaultValue": ["WHITE, BLACK"],
+      "type": "java.lang.String",
+      "description": "Chose the default theme"
+    }
+  ]
+}

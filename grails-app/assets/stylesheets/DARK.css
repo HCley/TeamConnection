@@ -14,8 +14,7 @@
 *= require_self
 */
 
-/*.body-background {*/
-/*    background:*/
-/*        radial-gradient(ellipse at bottom, #f8f4f4, transparent 115%);*/
-/*            !*radial-gradient(ellipse at bottom, #02202A, transparent 500%);*!*/
-/*}*/
+.body-background {
+    background:
+            radial-gradient(ellipse at bottom, #02202A, transparent 500%);
+}

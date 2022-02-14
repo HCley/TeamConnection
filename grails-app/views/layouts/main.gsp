@@ -9,13 +9,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <asset:link rel="icon" href="favicon.ico" type="image/x-ico"/>
 
-    <asset:stylesheet src="application.css"/>
+    <g:if test="${ theme }">
+        <asset:stylesheet src="${theme}.css"/>
+    </g:if>
+    <g:else>
+        <asset:stylesheet src="application.css"/>
+    </g:else>
 
     <g:layoutHead/>
 </head>
 
 <body  class="body-background">
-    <g:set var="dotDistance" value="2em"/>
+    <g:set var="dotDistance" value="1em"/>
 
     <svg class="background-pattern">
         <mask maskUnits="userSpaceOnUse" id="fade">
@@ -31,12 +36,7 @@
     </svg>
 
     <nav class="navbar navbar-expand-lg navbar-dark navbar-static-top header-background" role="navigation">
-        <sec:ifLoggedIn>
-            <a class="navbar-brand" width="200" height="70" href="/dashboard"><asset:image src="ages.svg" alt="AGES Logo"/></a>
-        </sec:ifLoggedIn>
-        <sec:ifNotLoggedIn>
-            <a class="navbar-brand" width="200" height="70" href="/#"><asset:image src="ages.svg" alt="AGES Logo"/></a>
-        </sec:ifNotLoggedIn>
+        <a class="navbar-brand" width="200" height="70" href="/dashboard"><asset:image src="ages.svg" alt="AGES Logo"/></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -50,6 +50,9 @@
                             <sec:loggedInUserInfo field='name'/>
                         </a>
                         <div class="dropdown-menu navbar-dark dropdown-color">
+                            <g:form controller="user" action="configurations">
+                                <g:submitButton class="dropdown-item navbar-dark color-light" name="Submit" value="${message(code:'default.user.configurations')}" style="color:gray" />
+                            </g:form>
                             <g:form controller="logout">
                                 <g:submitButton class="dropdown-item navbar-dark color-light" name="Submit" value="${message(code:'default.security.logout')}" style="color:gray" />
                             </g:form>

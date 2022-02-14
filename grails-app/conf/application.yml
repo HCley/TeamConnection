@@ -1,4 +1,10 @@
 ---
+application:
+    default:
+        theme:
+            color: 'WHITE'
+
+---
 grails:
     profile: web
     codegen:
@@ -14,6 +20,8 @@ info:
         version: '@info.app.version@'
         grailsVersion: '@info.app.grailsVersion@'
 spring:
+    default:
+        theme: 'WHITE'
     h2:
         console:
             enabled: true

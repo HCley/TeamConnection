@@ -16,9 +16,12 @@ class RegisterController {
             //"Password and Re-Password not match"
             flash.message = message(code:"default.security.register.password.mismatch") as Object
             redirect action: "index"
+            return
         } else {
             try {
-                def user = User.findByUsername(params.username)?: new User(username: params.username, password: params.password, name: params.name, registrationId: params.registration).save()
+                if (User.findByUsername(params.username))
+                    throw new ValidationException("User already exists.")
+                def user = new User(username: params.username, password: params.password, name: params.name, registrationId: params.registration).save(failOnError: true)
                 def role = Role.findByAuthority("PENDING_APPROVAL")
                 def project = Project.get(params.project.id)
                 if(user && role) {
@@ -36,9 +39,9 @@ class RegisterController {
                     flash.message = "Register failed"
                     render view: "index"
                 }
-            } catch (ValidationException ignored) {
-                println ignored.getMessage()
-                flash.error = "Register Failed"
+            } catch (ValidationException validationException) {
+                flash.error = """Register Failed
+                                ${validationException.getMessage()}"""
                 redirect action: "index"
             }
         }

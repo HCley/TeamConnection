@@ -9,7 +9,7 @@ import org.hibernate.SessionFactory
 @Rollback
 class QuestionsServiceSpec extends Specification {
 
-    QuestionsService questionsService
+    QuestionsInterfaceService questionsService
     SessionFactory sessionFactory
 
     private Long setupData() {

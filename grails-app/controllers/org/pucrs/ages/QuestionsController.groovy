@@ -7,7 +7,7 @@ import static org.springframework.http.HttpStatus.*
 @Secured(["ROLE_ADMIN"])
 class QuestionsController {
 
-    QuestionsService questionsService
+    QuestionsInterfaceService questionsService
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
