@@ -3,7 +3,7 @@ package org.pucrs.ages
 import grails.plugin.springsecurity.SpringSecurityService
 import grails.plugin.springsecurity.annotation.Secured
 
-@Secured(["ROLE_ADMIN"])
+@Secured(["ROLE_ADMIN", "ROLE_PROFESSOR", "ROLE_AGESI", "ROLE_AGESII", "ROLE_AGESIII", "ROLE_AGESIV"])
 class DashboardController {
 
     SpringSecurityService springSecurityService
@@ -11,7 +11,8 @@ class DashboardController {
     UserService userService
 
     def index() {
-        respond new Object(), model: [theme: userService.getTheme(springSecurityService.currentUser as User)]
+        def user = springSecurityService.currentUser as User
+        respond user, model: [theme: userService.getTheme(user)]
     }
 
 }

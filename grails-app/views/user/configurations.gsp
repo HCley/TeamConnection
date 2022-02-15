@@ -10,7 +10,7 @@
 <html>
 <head>
     <meta name="layout" content="main" />
-    <g:set var="entityName" value="${message(code: 'questions.label', default: 'Configurations')}" />
+    <g:set var="entityName" value="${message(code: 'configurations.label', default: 'Configurations')}" />
     <title><g:message code="default.home.label" args="[entityName]" /></title>
 </head>
 <body>
@@ -28,7 +28,7 @@
     <div class="row">
         <div class="col-sm-7 col-md-12 col-lg-5 mx-auto">
             <div class="vertical-center card card-signin my-5">
-                <div class="card-body">
+                <div class="card-color card-body">
                     <h5 class="card-title text-center"><g:message code="default.user.configurations"/></h5>
                     <g:if test="${flash.message}">
                         <div class="alert alert-danger" role="alert">${flash.message}</div>

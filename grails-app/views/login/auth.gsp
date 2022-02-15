@@ -8,7 +8,7 @@
 <div class="row">
     <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
         <div class="vertical-center card card-signin my-5">
-            <div class="card-body">
+            <div class="card-color card-body">
                 <h5 class="card-title text-center"><g:message code="default.security.login.page"/></h5>
                 <g:if test="${flash.message}">
                     <div class="alert alert-danger" role="alert">${flash.message}</div>

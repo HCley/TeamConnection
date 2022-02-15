@@ -2,13 +2,14 @@ package org.pucrs.ages
 
 import grails.plugin.springsecurity.annotation.Secured
 import grails.gorm.transactions.Transactional
-import grails.validation.ValidationException
 
 @Transactional
 @Secured('permitAll')
 class RegisterController {
 
     static allowedMethods = [register: "POST"]
+    ProjectInterfaceService projectInterfaceService
+    UserService userService
 
     def index() { }
     def register() {
@@ -16,14 +17,25 @@ class RegisterController {
             //"Password and Re-Password not match"
             flash.message = message(code:"default.security.register.password.mismatch") as Object
             redirect action: "index"
-            return
         } else {
             try {
-                if (User.findByUsername(params.username))
-                    throw new ValidationException("User already exists.")
-                def user = new User(username: params.username, password: params.password, name: params.name, registrationId: params.registration).save(failOnError: true)
+                if (userService.findByUsername(params.username as String))
+                    throw new Exception("User already exists.")
+
+                def user = new User(
+                        username: params.username,
+                        password: params.password,
+                        name: params.name,
+                        registrationId: params.registration,
+                        ages: AGES."${params.ages.id}",
+                        configuration:
+                                new UserConfiguration(
+                                        mode: ThemeMode."${grailsApplication.config.getProperty('application.default.theme.color')}"
+                                )
+                ).save(failOnError: true)
+
                 def role = Role.findByAuthority("PENDING_APPROVAL")
-                def project = Project.get(params.project.id)
+                def project = projectInterfaceService.get(params.project.id as Serializable)
                 if(user && role) {
                     UserRole.create user, role
                     UserRole.withSession {
@@ -39,9 +51,8 @@ class RegisterController {
                     flash.message = "Register failed"
                     render view: "index"
                 }
-            } catch (ValidationException validationException) {
-                flash.error = """Register Failed
-                                ${validationException.getMessage()}"""
+            } catch (Exception validationException) {
+                flash.message = """Register Failed ${validationException.getLocalizedMessage()}"""
                 redirect action: "index"
             }
         }

@@ -1,3 +1,4 @@
+<%@ page import="org.pucrs.ages.UserService" %>
 <!doctype html>
 <html lang="en" class="no-js">
 <head>
@@ -50,17 +51,22 @@
                             <sec:loggedInUserInfo field='name'/>
                         </a>
                         <div class="dropdown-menu navbar-dark dropdown-color">
+                            <g:if test="${UserService.hasHigherPermissions(this.user)}">
+                                <g:form controller="user" action="pending">
+                                    <g:submitButton class="dropdown-item navbar-dark color-light" name="Submit" value="${message(code:'default.user.pending')}"/>
+                                </g:form>
+                            </g:if>
                             <g:form controller="user" action="configurations">
-                                <g:submitButton class="dropdown-item navbar-dark color-light" name="Submit" value="${message(code:'default.user.configurations')}" style="color:gray" />
+                                <g:submitButton class="dropdown-item navbar-dark color-light" name="Submit" value="${message(code:'default.user.configurations')}"/>
                             </g:form>
                             <g:form controller="logout">
-                                <g:submitButton class="dropdown-item navbar-dark color-light" name="Submit" value="${message(code:'default.security.logout')}" style="color:gray" />
+                                <g:submitButton class="dropdown-item navbar-dark color-light" name="Submit" value="${message(code:'default.security.logout')}"/>
                             </g:form>
                         </div>
                     </li>
                 </sec:ifLoggedIn>
                 <sec:ifNotLoggedIn>
-                    <a class="nav-link  navbar-dark" href="/login/auth" id="navlogin">
+                    <a class="nav-link  navbar-dark" href="/login" id="navlogin">
                         <g:message code="default.security.form.register.login"/>
                     </a>
                 </sec:ifNotLoggedIn>

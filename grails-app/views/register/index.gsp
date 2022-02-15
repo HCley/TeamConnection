@@ -1,4 +1,4 @@
-<%@ page import="org.pucrs.ages.Project; org.pucrs.ages.Role" %>
+<%@ page import="org.pucrs.ages.AGES; org.pucrs.ages.Project; org.pucrs.ages.Role" %>
 <html>
 <head>
     <meta name="layout" content="${gspLayout ?: 'main'}"/>
@@ -20,7 +20,7 @@
 <div class="row">
     <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
         <div class="vertical-center card card-signin my-5">
-            <div class="card-body">
+            <div class="card-color card-body">
                 <h5 class="card-title text-center"><g:message code="default.security.register.page"/></h5>
                 <g:if test="${flash.message}">
                     <div class="alert alert-danger" role="alert">${flash.message}</div>
@@ -35,6 +35,13 @@
                         <label for="project"><g:message code="default.security.project"/></label>
                         <g:select class="form-control" name="project.id"
                                   from="${Project.list()}"
+                                  optionKey="id" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="ages"><g:message code="default.security.ages"/></label>
+                        <g:select class="form-control" name="ages.id"
+                                  from="${AGES.list()}"
                                   optionKey="id" />
                     </div>
 

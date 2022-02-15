@@ -18,3 +18,8 @@
     background:
             radial-gradient(ellipse at bottom, #02202A, transparent 500%);
 }
+
+
+.card-color {
+    background-color: #f8f5f5;
+}

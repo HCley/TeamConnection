@@ -4,7 +4,7 @@ import grails.plugin.springsecurity.SpringSecurityService
 import grails.plugin.springsecurity.annotation.Secured
 import grails.validation.ValidationException
 
-@Secured(["ROLE_ADMIN"])
+@Secured(["ROLE_ADMIN", "ROLE_PROFESSOR"])
 class UserController {
 
 //    UserConfigurationInterfaceService userConfigurationService
@@ -12,10 +12,18 @@ class UserController {
     UserInterfaceService userInterfaceService
     UserService userService
 
+
     def configurations() {
         def user = springSecurityService.currentUser as User
-        println user.getPassword()
         respond user, model:[theme: userService.getTheme(user)]
+    }
+
+    @Secured(["ROLE_ADMIN", "ROLE_PROFESSOR"])
+    def pending() {
+        def user = springSecurityService.currentUser as User
+        def list = userService.findPendingUsers()
+        def count = list.size()
+        respond user, model:[pendingList: list, pendingCount: count, theme: userService.getTheme(user)]
     }
 
     def update() {
@@ -36,6 +44,7 @@ class UserController {
             try {
                 userInterfaceService.save(user)
             } catch (ValidationException ignored) {
+                flash.message = """Registration error: ${user.errors}"""
                 respond user.errors, view:'configurations'
                 return
             }
@@ -43,8 +52,7 @@ class UserController {
             flash.info = message(code:"default.security.register.completed") as Object
             redirect controller: "dashboard", action: "index"
         } catch (ValidationException validationException) {
-            flash.error = """Update error Failed
-                                ${validationException.getMessage()}"""
+            flash.message = """Registration error: ${validationException.getMessage()}"""
             redirect controller: "dashboard", action: "index"
         }
     }
